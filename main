@@ -1,0 +1,181 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+void poczatek()
+{
+    cout << "Czesc, witaj w mojej grze RPG. Jestem zajebistym wojownikiem. " << endl << endl;
+    cout << "Jest to wersja pre pre pre pre pre pre alpha xD. Milej zabawy :)" << endl;
+    cout << "Wlasnie zaczynasz wspaniala przygode. " << endl;
+}
+
+void walka(); // funkcje ta masz nizej niz ta w ktorej wywolujesz dlatego musisz ja zadeklarowac wczesniej bo inaczej blad kompilator wywali
+
+void miasto()
+{
+    char odp;
+   cout << "Jestes w miescie, co robisz? " << endl;
+   cout << "Idz walczyc - wybierz 1 " << endl;
+   cout << "Idz kupowac - wybierz 2 (jeszcze nie zaprogramowane)" << endl;
+
+
+   cout << "Ide spac - 5. (wyjscie z gry, potem zrobi sie sejwy) " << endl;
+   cin >> odp;
+    do{
+    cout << endl;
+   switch (odp)
+   {
+    case '1':walka();
+    break;
+    case '2'://kupowanie();
+    break;
+    case '5':Sleep(2000);
+    break;
+    default:{
+            cout << "Wybierz cos innego" << endl;
+            odp=0;
+            }
+            }
+   }while ((odp==1) || (odp==2) || (odp==5));
+}
+
+class potwory
+{
+public:
+    string nazwa;
+    int zyciep,atakp,obronap;
+};
+
+class goblin:public potwory
+{
+public:
+    goblin();
+    ~goblin();
+};
+
+goblin::goblin()
+{
+    nazwa="Golbin";
+    zyciep=20;
+    atakp=5;
+    obronap=1;
+}
+
+goblin::~goblin()
+{
+    cout << " ";
+}
+
+void g(string nazwa, int zyciep,int atakp,int obronap) //zmienilem
+{
+    cout << "To jest " << nazwa << "." << endl;
+    cout << "Ma " << zyciep << " zycia, " << atakp << " ataku i " << obronap <<" obrony." << endl;
+}
+class bohaterowie
+{
+public:
+    string imie;
+    int zycie,atak,obrona;
+};
+class wojownik : public bohaterowie
+{
+public:
+    wojownik();
+    ~wojownik();
+};
+wojownik::wojownik()
+{
+    imie="Stefan";
+    zycie=100;
+    atak=10;
+    obrona=3;
+}
+wojownik::~wojownik()
+{
+    cout << " ";
+}
+void wojownikk(string imie, int zycie, int atak, int obrona)
+{
+cout << "Jestes wojownikiem. " << endl;
+cout << "Twoje hp: " << zycie << endl;
+cout << "Twoj atak: " << atak << endl;
+cout << "Twoja obrona: " << obrona << endl;
+}
+void walka()
+{
+    goblin GOBLIN;
+    cout << "Spotykasz " << GOBLIN.nazwa <<"a. "<< endl;
+    wojownik WOJOWNIK;
+    cout << "Twoje hp: " << WOJOWNIK.zycie << endl;
+    cout << "Twoj atak: " << WOJOWNIK.atak << endl;
+    cout << "Twoja obrona: " << WOJOWNIK.obrona << endl;
+    cout << "Zycie "<< GOBLIN.nazwa<<"a: " << GOBLIN.zyciep<< endl;
+    cout << "Atak "<< GOBLIN.nazwa<<"a: " << GOBLIN.atakp<< endl;
+    cout << "Obrona"<< GOBLIN.nazwa<<"a: " << GOBLIN.obronap<< endl;
+    int odp;
+    do{
+            do{
+        Sleep(1000);
+        cout<< "Co chcesz robic??" << endl<<endl;
+        cout<< "Atak - wybierz 1." << endl;
+        cout<< "Rzucenie czaru - wybierz 2(jeszcze nie zaprogramowane)." << endl;
+        cout<< "Wypicie pota - wybierz 3(jeszcze nie zaprogramowane)." << endl;
+        cout<< "Ucieczka - wybierz 4." << endl;
+        cin >> odp;
+        switch (odp)
+        {
+    case 4:
+        {
+            cout << "Uciekasz, tchorz! " << endl;
+            WOJOWNIK.zycie=0;
+            miasto();
+            break;
+        }
+        default: cout << "Wybierz cos innego." << endl;
+    case 1:
+        {
+            do{
+        cout <<endl<< "Atakujesz!" << endl;
+        if (WOJOWNIK.atak >GOBLIN.obronap)
+        {
+        GOBLIN.zyciep=(GOBLIN.zyciep - WOJOWNIK.atak) + GOBLIN.obronap;
+        cout << "Zadales mu " << WOJOWNIK.atak-GOBLIN.obronap << " obrazen. Zaabsorbowal " << GOBLIN.obronap << " obrazen. Zostalo mu " << GOBLIN.zyciep <<" zycia." << endl;
+        }else cout << "Potwor jest za silny " << endl<< endl;
+        Sleep(1000);
+        cout <<endl<< "Potwor cie atakuje" << endl;
+        Sleep(1000);
+        if (GOBLIN.atakp >= WOJOWNIK.obrona)
+            {WOJOWNIK.zycie = (WOJOWNIK.zycie - GOBLIN.atakp) + WOJOWNIK.obrona;
+            cout << "Potwor zadal ci " << GOBLIN.atakp-WOJOWNIK.obrona << " obrazen. Zaabsorbowales " << WOJOWNIK.obrona << " obrazen. Zostalo ci " << WOJOWNIK.zycie <<" zycia."<< endl;
+            }
+            else cout << "Twoj pancerz sprawia ze potwor nie zadaje ci zadnych obrazen. " << endl;
+            Sleep(1000);
+    }while (!((WOJOWNIK.zycie <=0 ) || (GOBLIN.zyciep <=0)));
+        cout << "Walka zakonczona. " << endl;
+    if (GOBLIN.zyciep <=0)
+    cout << "Wygrales! Ilosc zdobytego xp:... " << endl;
+    else cout << " Przegrales! Frajer! " << endl;
+    Sleep(3000);
+    cout<<"Wracasz teraz do miasta. " << endl<<endl;
+    miasto();
+    break;
+        }
+
+        }
+            }while (WOJOWNIK.zycie <=0);
+        }while (!((odp == '1') || (odp == '4')));
+}
+
+
+
+
+int main()
+{
+    poczatek();
+    miasto();
+
+
+cout << "Dziekujemy za gre! " << endl;
+
+    return 0;
+}
